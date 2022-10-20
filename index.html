@@ -5,11 +5,40 @@
   <title>station_lottery</title>
 </head>
 <body>
-  <p>くじ引き結果：<span id="result"></span></p>
-  <button id="startButton">くじを引く</button>
+<p>駅ガチャの回数(1-6)</p>
+<select id="order">
+    <option value="1l">1</option>
+    <option value="2l">2</option>
+    <option value="3l">3</option>
+    <option value="4l">4</option>
+    <option value="5l">5</option>
+    <option value="6l">6</option>
+</select>
+<button id="start">実行</button>
+<p>駅の候補</p>
+<p><span id="result"></span></p>
+
   <script  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"  
 integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="  crossorigin="anonymous"></script>
   <script>
+    // csvを配列として読む
+     $.get('station20220921free.csv', parseCsv, 'text');
+     function parseCsv(data) {
+        var csv = $.csv.toArrays(data);
+        var insert = '';
+        $(csv).each(function(i) {
+            if (this.length > 0) {
+            insert += '<tr>';
+            $(this).each(function() {
+                insert += '<td>' + this + '</td>';
+            });
+            insert += '</tr>';
+            }
+            var target = (i === 0) ? "thead" : "tbody";
+            $("#result "+target).append(insert);
+            insert = "";
+        });
+        }
     // くじ引き結果
     var results = [
       // "大賞"、"1等"、"2等"、"3等"、"はずれ"
