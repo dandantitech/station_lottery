@@ -23,7 +23,6 @@ integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="  crossorigin="an
   <script>
     // csvを配列として読む
     $(function() {
-
         function parseCsv(data) {
         // CSVを配列で読み込む
         var csv = $.csv.toArrays(data);
@@ -37,7 +36,7 @@ integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="  crossorigin="an
     // くじ引き結果
     $("#start").click(function() {
 		// value値を取得
-		const str1 = data[2][0];
+		const str1 = 'aa';
 		$("#result").text(str1);
 	});
     // ボタンを押した際の動作
