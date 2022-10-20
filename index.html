@@ -24,39 +24,22 @@ integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="  crossorigin="an
     // csvを配列として読む
     $(function() {
 
-function parseCsv(data) {
-  // CSVを配列で読み込む
-  var csv = $.csv.toArrays(data);
+        function parseCsv(data) {
+        // CSVを配列で読み込む
+        var csv = $.csv.toArrays(data);
+        }
 
-  var insert = '';
-  $(csv).each(function(i) {
-    if (this.length > 0) {
-      insert += '<tr>';
-      $(this).each(function() {
-          insert += '<td>' + this + '</td>';
-      });
-      insert += '</tr>';
-    }
-    var target = (i === 0) ? "thead" : "tbody";
-    $("#result "+target).append(insert);
-    insert = "";
-  });
-}
+        // CSVの読み込み
+        $.get('station20220921free.csv', parseCsv, 'text');
 
-// CSVの読み込み
-$.get('station20220921free.csv', parseCsv, 'text');
-
-});
+        });
 
     // くじ引き結果
-    var results = [
-      // "大賞"、"1等"、"2等"、"3等"、"はずれ"
-      "大賞",
-      "1等",
-      "2等",
-      "3等",
-      "はずれ"
-    ];
+    $("#start").click(function() {
+		// value値を取得
+		const str1 = data[2][0];
+		$("#result").text(str1);
+	});
     // ボタンを押した際の動作
     $('#startButton').on('click', function() {
       var random = Math.floor( Math.random() * results.length );
