@@ -21,22 +21,44 @@
   <script  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"  
 integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="  crossorigin="anonymous"></script>
   <script>
-    // csvを配列として読む
-    $(function() {
-        function parseCsv(data) {
-        // CSVを配列で読み込む
-        var csv = $.csv.toArrays(data);
-        }
+    // CSVファイル読み込み
+  function csvToArray(filename) {
 
-        // CSVの読み込み
-        $.get('station20220921free.csv', parseCsv, 'text');
+    // CSVファイルを文字列として取得
+    let srt = new XMLHttpRequest();
 
-        });
+    srt.open("GET", filename, false);
+    try {
+    srt.send(null);
+    } catch (err) {
+    console.log(err)
+    }
+
+    // 配列を用意
+    let csletr = [];
+
+    // 改行ごとに配列化
+    let lines = srt.responseText.split(/\r\n|\n/);
+
+    // 1行ごとに処理
+    for (let i = 0; i < lines.length; ++i) {
+    let cells = lines[i].split(",");
+    if (cells.length != 1) {
+        csletr.push(cells);
+    }
+    }
+
+    return csletr;
+
+    }
+
+    // CSVの読み込み
+    let sta = csvToArray("station20220921free.csv");
 
     // くじ引き結果
     $("#start").click(function() {
 		// value値を取得
-		const str1 = console.log(parseCsv[1][0]);
+		const str1 = console.log(sta[1][0]);
 		$("#result").text(str1);
 	});
     // ボタンを押した際の動作
